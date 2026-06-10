@@ -6,6 +6,12 @@ The application allows users to search for weather conditions in any city, view 
 
 ---
 
+## 🌐 Live Demo
+
+https://sasibuilds.github.io/weather_app/
+
+---
+
 ## ✨ Features
 
 ### 🌍 Real-Time Weather
@@ -98,12 +104,6 @@ cd weather_app
 ### Run the Application
 
 Open the `index.html` file in your browser.
-
----
-
-## 🌐 Live Demo
-
-https://sasibuilds.github.io/weather_app/
 
 ---
 
