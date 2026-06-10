@@ -1,34 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WeatherSphere</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
 
-    <div class="container">
-        <div class="weather-card">
-            <h1>Weather App</h1>
+<div id="loader">
+    <div class="spinner"></div>
+</div>
 
-            <div class="search-box">
-                <input type="text" id="cityInput" placeholder="Enter city name">
-                <button onclick="getWeather()">Search</button>
-            </div>
+<header>
 
-            <div id="weatherResult" class="weather-info">
-                <h2 id="city"></h2>
-                <img id="icon" src="" alt="">
-                <h3 id="temp"></h3>
-                <p id="description"></p>
-                <p id="humidity"></p>
-                <p id="wind"></p>
-            </div>
-        </div>
+    <div class="logo">
+        <h1>🌦 WeatherSphere</h1>
     </div>
 
-    <script src="script.js"></script>
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="cityInput"
+            placeholder="Search city...">
+
+        <button id="searchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <button id="locationBtn">
+            📍
+        </button>
+
+        <button id="themeBtn">
+            🌙
+        </button>
+
+    </div>
+
+</header>
+
+<main>
+
+    <!-- Current Weather -->
+
+    <section class="glass current-weather">
+
+        <div class="weather-left">
+
+            <h2 id="cityName">City Name</h2>
+
+            <p id="dateTime"></p>
+
+            <img
+                id="weatherIcon"
+                src=""
+                alt="Weather Icon">
+
+            <h1 id="temperature">--°C</h1>
+
+            <p id="description">
+                Weather Description
+            </p>
+
+        </div>
+
+        <div class="weather-right">
+
+            <div class="weather-grid">
+
+                <div class="weather-card">
+                    <i class="fa-solid fa-temperature-half"></i>
+                    <h4>Feels Like</h4>
+                    <p id="feelsLike">--</p>
+                </div>
+
+                <div class="weather-card">
+                    <i class="fa-solid fa-droplet"></i>
+                    <h4>Humidity</h4>
+                    <p id="humidity">--</p>
+                </div>
+
+                <div class="weather-card">
+                    <i class="fa-solid fa-wind"></i>
+                    <h4>Wind</h4>
+                    <p id="wind">--</p>
+                </div>
+
+                <div class="weather-card">
+                    <i class="fa-solid fa-gauge"></i>
+                    <h4>Pressure</h4>
+                    <p id="pressure">--</p>
+                </div>
+
+                <div class="weather-card">
+                    <i class="fa-solid fa-eye"></i>
+                    <h4>Visibility</h4>
+                    <p id="visibility">--</p>
+                </div>
+
+                <div class="weather-card">
+                    <i class="fa-solid fa-sun"></i>
+                    <h4>UV Index</h4>
+                    <p id="uvIndex">--</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Temperature Chart -->
+
+    <section class="glass chart-section">
+
+        <h2>📈 Temperature Analytics</h2>
+
+        <canvas id="tempChart"></canvas>
+
+    </section>
+
+    <!-- Hourly Forecast -->
+
+    <section class="glass">
+
+        <h2>⏰ Hourly Forecast</h2>
+
+        <div
+            id="hourlyForecast"
+            class="forecast-container">
+        </div>
+
+    </section>
+
+    <!-- 5 Day Forecast -->
+
+    <section class="glass">
+
+        <h2>📅 5 Day Forecast</h2>
+
+        <div
+            id="dailyForecast"
+            class="forecast-container">
+        </div>
+
+    </section>
+
+    <!-- AQI -->
+
+    <section class="glass">
+
+        <h2>🌫 Air Quality Index</h2>
+
+        <div class="aqi-grid">
+
+            <div class="aqi-card">
+                <h4>AQI</h4>
+                <p id="aqi">--</p>
+            </div>
+
+            <div class="aqi-card">
+                <h4>CO</h4>
+                <p id="co">--</p>
+            </div>
+
+            <div class="aqi-card">
+                <h4>NO₂</h4>
+                <p id="no2">--</p>
+            </div>
+
+            <div class="aqi-card">
+                <h4>O₃</h4>
+                <p id="o3">--</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Sunrise Sunset -->
+
+    <section class="glass">
+
+        <h2>🌅 Sun Information</h2>
+
+        <div class="sun-grid">
+
+            <div class="sun-card">
+                <h3>Sunrise</h3>
+                <p id="sunrise">--</p>
+            </div>
+
+            <div class="sun-card">
+                <h3>Sunset</h3>
+                <p id="sunset">--</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Favorites -->
+
+    <section class="glass">
+
+        <div class="section-header">
+
+            <h2>⭐ Favorite Cities</h2>
+
+            <button id="addFavoriteBtn">
+                Add Current City
+            </button>
+
+        </div>
+
+        <ul id="favoritesList"></ul>
+
+    </section>
+
+    <!-- Search History -->
+
+    <section class="glass">
+
+        <h2>🕒 Recent Searches</h2>
+
+        <ul id="historyList"></ul>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <p>
+        © 2025 WeatherSphere
+    </p>
+
+    <p>
+        Designed & Developed by Daggubati Sashank
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>
