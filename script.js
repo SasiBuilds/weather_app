@@ -1,15 +1,16 @@
-const apiKey = "12956bbca017867eebe8253ccbf9bb7b";
+const API_KEY = "YOUR_API_KEY_HERE";
+
+const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 async function getWeather() {
-    const cityInput = document.getElementById("cityInput").value;
+    const cityInput = document.getElementById("cityInput").value.trim();
 
-    if (cityInput === "") {
+    if (!cityInput) {
         alert("Please enter a city name");
         return;
     }
 
-    const url =
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric`;
+    const url = `${BASE_URL}?q=${cityInput}&appid=${API_KEY}&units=metric`;
 
     try {
         const response = await fetch(url);
